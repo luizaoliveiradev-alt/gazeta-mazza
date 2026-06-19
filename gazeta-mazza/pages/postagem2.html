@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Visualizar Reportagem - Gazeta Mazza</title>
+    
+    <link rel="icon" type="image/png" href="https://i.imgur.com/m8ZYGE9.png">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --dark-grey: #333333;
+            --off-white: #e8e6e1; 
+            --accent-blue: #a8c1d9;
+            --font-serif: 'Playfair Display', serif;
+            --font-sans: 'Roboto', sans-serif;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { background-color: var(--off-white); color: var(--dark-grey); font-family: var(--font-sans); line-height: 1.8; }
+
+        /* --- HEADER --- */
+        header {
+            background-color: var(--dark-grey);
+            color: white;
+            padding-top: 15px;
+            text-align: center;
+            position: relative;
+            z-index: 1000;
+        }
+
+        .menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 2rem;
+            cursor: pointer;
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            z-index: 1100;
+        }
+
+        .nav-menu {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-bottom: 10px;
+            transition: 0.3s ease;
+        }
+
+        .nav-menu ul {
+            list-style: none;
+            display: flex;
+            gap: 30px;
+        }
+
+        .nav-menu a {
+            color: #d1d1d1;
+            text-decoration: none;
+            font-family: var(--font-serif);
+            font-size: 1.1rem;
+            transition: color 0.3s ease;
+        }
+
+        .nav-menu a:hover { color: white; }
+
+        .divider-line {
+            height: 1px;
+            background-color: rgba(255, 255, 255, 0.2);
+            width: 90%;
+            margin: 0 auto;
+        }
+
+        .logo-wrapper {
+            padding: 10px 0;
+            margin-top: 5px;
+        }
+
+        .logo-img {
+            max-width: 220px;
+            height: auto;
+            display: inline-block;
+        }
+
+        /* --- CONTEÚDO SEMÂNTICO --- */
+        .main-article {
+            max-width: 850px;
+            margin: 40px auto;
+            background-color: #fff;
+            border: 1px solid #ddd;
+            box-shadow: 0px 4px 15px rgba(0,0,0,0.05);
+            overflow: hidden; /* Garante que o fundo do header não escape */
+        }
+
+        .article-header {
+            text-align: center;
+            padding: 60px 40px;
+            background-color: #4a4a4a; /* Cor de fundo conforme a imagem */
+            margin-bottom: 40px;
+        }
+
+        .article-header h1 {
+            font-family: var(--font-serif);
+            font-size: 2.7rem;
+            line-height: 1.1;
+            margin-bottom: 15px;
+            color: #c9c9c9; /* Texto escuro sobre o fundo cinza conforme a imagem */
+            text-transform: uppercase;
+        }
+
+        .author-byline {
+            font-family: var(--font-serif);
+            font-size: 1rem;
+            font-weight: 400;
+            font-style: italic;
+            color: #aaa; /* Texto mais claro para o "Por:" */
+            display: block;
+        }
+
+        .article-body {
+            padding: 0 40px 40px 40px;
+        }
+
+        .article-body p { 
+            margin-bottom: 20px; 
+            font-size: 1.1rem; 
+            text-align: justify; 
+        }
+
+        /* --- IMAGENS E LEGENDAS --- */
+        figure { margin: 35px 0; text-align: center; }
+        
+        .img-container-h { 
+            width: 100%; height: 400px; background: #eee; border: 1px solid #000; 
+            display: flex; align-items: center; justify-content: center; overflow: hidden;
+        }
+
+        .media-group-vertical { 
+            display: flex; 
+            gap: 20px; 
+            margin: 35px 0; 
+        }
+
+        .img-container-v { 
+            flex: 1; height: 500px; background: #eee; border: 1px solid #000; 
+            display: flex; align-items: center; justify-content: center; overflow: hidden;
+        }
+
+        img { max-width: 100%; height: auto; display: block; }
+
+        figcaption {
+            display: block; font-size: 0.85rem; font-style: italic; color: #666;
+            margin-top: 8px; text-align: left; border-left: 3px solid var(--accent-blue); padding-left: 10px;
+        }
+
+        /* --- RODAPÉ --- */
+        footer {
+            background-color: var(--dark-grey);
+            color: white;
+            padding: 40px 20px;
+            text-align: center;
+            margin-top: 60px;
+            font-size: 0.85rem;
+        }
+
+        /* --- RESPONSIVIDADE --- */
+        @media (max-width: 768px) {
+            .menu-toggle { display: block; }
+
+            .nav-menu {
+                display: none;
+                flex-direction: column;
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100vh;
+                background-color: rgba(34, 34, 34, 0.98);
+                justify-content: center;
+                align-items: center;
+                z-index: 1050;
+            }
+
+            .nav-menu ul {
+                flex-direction: column;
+                align-items: center;
+                gap: 40px;
+            }
+
+            .nav-menu.active { display: flex; }
+            .nav-menu a { font-size: 1.8rem; color: white; }
+
+            .media-group-vertical { flex-direction: column; }
+            .article-header h1 { font-size: 2.2rem; }
+            .img-container-v { height: 400px; }
+            .main-article { margin: 15px; }
+            .article-body { padding: 0 20px 20px 20px; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <button class="menu-toggle" id="mobile-menu" aria-label="Abrir Menu Principal">☰</button>
+        
+        <nav class="nav-menu" id="nav-list">
+            <ul>
+                <li><a href="../index.html">Voltar ao Início</a></li>
+            </ul>
+        </nav>
+
+        <div class="divider-line" aria-hidden="true"></div>
+
+        <div class="logo-wrapper">
+            <a href="index.html">
+                <img src="https://i.imgur.com/m8ZYGE9.png" alt="Logotipo Gazeta Mazza" class="logo-img">
+            </a>
+        </div>
+    </header>
+
+    <main>
+        <article class="main-article">
+            <header class="article-header">
+                <h1>O que são as plataformas?</h1>
+                <address class="author-byline">Por Antônia, Kyara, Gustavo e outros colaboradores</address>
+            </header>
+
+            <section class="article-body">
+                <p>
+                    As plataformas digitais da Sala do Futuro são sistemas integrados da (SEDUC -SP) que conectam alunos, pais e professores.
+                    Elas centralizam materiais didáticos, tarefas,notas, frequências, avaliações e ferramentas de gamificação, visando tornar o ensino mais interativo, inclusivo e personalizado para a rede pública.
+                    As plataformas digitais da sala do futuro são ferramentas tecnológicas desenhadas para transformar a sala de aula em um ambiente mais dinâmico, conectado e focado no aluno. Em vez de apenas substituir o quadro negro por uma tela, essas plataformas mudam a forma como o conhecimento é construído.<br>
+                    Plataformas digitais na educação servem para tornar o aprendizado mais dinâmico e versátil, que não apenas complementam, mas que transformam a maneira como o ensino e a aprendizagem ocorrem, proporcionando um ambiente mais acessível e adaptável às necessidades dos alunos e professores.
+
+                </p>
+
+                <figure>
+                    <div class="img-container-h">
+                        <img src="https://i.imgur.com/GUjzOaa.jpeg" alt="Imagem Ilustrativa.">
+                    </div>
+                    <figcaption>Imagem Ilustrativa.</figcaption>
+                </figure>
+
+                <p>
+                    Para Alunos: Acesso a materiais digitais, realização de tarefas, envio de redações (Redação Paulista), acompanhamento da Prova Paulista e visualização de notas.<br>
+                    Para Professores: Registro de aulas, chamada diária (frequência), lançamento de avaliações, visualização do mural de avisos e organização do diário de classe.
+                </p>
+
+                <div class="media-group-vertical">
+                    <figure style="flex: 1;">
+                        <div class="img-container-v">
+                            <img src="https://i.imgur.com/pz48EkE.png" alt="Plataforma de Aprendizado">
+                        </div>
+                        <figcaption>Plataforma de apredezado: Sala do Futuro.</figcaption>
+                    </figure>
+
+                    <figure style="flex: 1;">
+                        <div class="img-container-v">
+                            <img src="https://i.imgur.com/4PfYT92.jpeg" alt="Alunos em sala de aula">
+                        </div>
+                        <figcaption>Alunos em sala de aula.</figcaption>
+                    </figure>
+                </div>
+
+                <p>
+                    As plataformas digitais na "Sala do Futuro" são cruciais para transformar o ensino,	tornando-o interativo, personalizado e colaborativo.<br> <strong>Personalização do ensino</strong>:
+                    Sistemas adaptativos ajustam o conteúdo às necessidades e ao desempenho de cada estudante.<br> <strong>Gestão e Acompanhamento</strong>:
+                    Professores e gestores geram relatórios de frequência e desempenho, facilitando a identificação de dificuldades e a correção de pendências.<br> <strong>Engajamento e Interatividade </strong>:
+                    Uso de ferramentas como gamificação, lousas digitais e softwares educativos transforma o aluno de receptor passivo em participante ativo.<br> <strong> Acessibilidade e Conectividade </strong>:
+                    Acesso a conteúdos a qualquer momento e lugar, com ferramentas (como no App Sala do Futuro) que conectam alunos, professores e responsáveis.<br> <strong> Desenvolvimento de Habilidades Digitais </strong>:
+                    Prepara os alunos com competências necessárias para navegar no mundo digital de forma crítica e responsável. 
+                        
+                        
+                    
+                    
+                    
+                </p>
+            </section>
+        </article>
+    </main>
+
+    <footer>
+        <p><strong>Projeto desenvolvido para a Eletiva Gazeta Mazza</strong></p>
+        <p style="margin-top: 10px; font-size: 0.7rem; opacity: 0.6;">Conteúdo: 1°A (2026) E.E Amácio Mazzaropi • Professora Lara Oliveira</p> 
+        <p style="margin-top: 10px; font-size: 0.7rem; opacity: 0.6;">Blog desenvolvido por: Camila Morais, Nicole Aparecida, Maria Eduarda Trindade, Melissa Blois e Rafael Avelino - 3DS (2026) • Professora Luiza Oliveira</p>
+        <p style="margin-top: 10px; font-size: 0.7rem; opacity: 0.6;">
+            © 2026 - Gazeta Mazza Digital
+        </p>
+    </footer>
+
+    <script>
+        const menuBtn = document.getElementById('mobile-menu');
+        const navList = document.getElementById('nav-list');
+
+        menuBtn.addEventListener('click', () => {
+            const isActive = navList.classList.toggle('active');
+            menuBtn.textContent = isActive ? '✕' : '☰';
+            menuBtn.setAttribute('aria-expanded', isActive);
+        });
+
+        document.querySelectorAll('.nav-menu a').forEach(link => {
+            link.addEventListener('click', () => {
+                navList.classList.remove('active');
+                menuBtn.textContent = '☰';
+            });
+        });
+    </script>
+</body>
+</html>

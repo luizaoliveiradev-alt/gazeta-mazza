@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Visualizar Reportagem - Gazeta Mazza</title>
+    
+    <link rel="icon" type="image/png" href="https://i.imgur.com/m8ZYGE9.png">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --dark-grey: #333333;
+            --off-white: #e8e6e1; 
+            --accent-blue: #a8c1d9;
+            --font-serif: 'Playfair Display', serif;
+            --font-sans: 'Roboto', sans-serif;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { background-color: var(--off-white); color: var(--dark-grey); font-family: var(--font-sans); line-height: 1.8; }
+
+        /* --- HEADER --- */
+        header {
+            background-color: var(--dark-grey);
+            color: white;
+            padding-top: 15px;
+            text-align: center;
+            position: relative;
+            z-index: 1000;
+        }
+
+        .menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 2rem;
+            cursor: pointer;
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            z-index: 1100;
+        }
+
+        .nav-menu {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-bottom: 10px;
+            transition: 0.3s ease;
+        }
+
+        .nav-menu ul {
+            list-style: none;
+            display: flex;
+            gap: 30px;
+        }
+
+        .nav-menu a {
+            color: #d1d1d1;
+            text-decoration: none;
+            font-family: var(--font-serif);
+            font-size: 1.1rem;
+            transition: color 0.3s ease;
+        }
+
+        .nav-menu a:hover { color: white; }
+
+        .divider-line {
+            height: 1px;
+            background-color: rgba(255, 255, 255, 0.2);
+            width: 90%;
+            margin: 0 auto;
+        }
+
+        .logo-wrapper {
+            padding: 10px 0;
+            margin-top: 5px;
+        }
+
+        .logo-img {
+            max-width: 220px;
+            height: auto;
+            display: inline-block;
+        }
+
+        /* --- CONTEÚDO SEMÂNTICO --- */
+        .main-article {
+            max-width: 850px;
+            margin: 40px auto;
+            background-color: #fff;
+            border: 1px solid #ddd;
+            box-shadow: 0px 4px 15px rgba(0,0,0,0.05);
+            overflow: hidden; /* Garante que o fundo do header não escape */
+        }
+
+        .article-header {
+            text-align: center;
+            padding: 60px 40px;
+            background-color: #4a4a4a; /* Cor de fundo conforme a imagem */
+            margin-bottom: 40px;
+        }
+
+        .article-header h1 {
+            font-family: var(--font-serif);
+            font-size: 2.7rem;
+            line-height: 1.1;
+            margin-bottom: 15px;
+            color: #c9c9c9; /* Texto escuro sobre o fundo cinza conforme a imagem */
+            text-transform: uppercase;
+        }
+
+        .author-byline {
+            font-family: var(--font-serif);
+            font-size: 1rem;
+            font-weight: 400;
+            font-style: italic;
+            color: #aaa; /* Texto mais claro para o "Por:" */
+            display: block;
+        }
+
+        .article-body {
+            padding: 0 40px 40px 40px;
+        }
+
+        .article-body p { 
+            margin-bottom: 20px; 
+            font-size: 1.1rem; 
+            text-align: justify; 
+        }
+
+        /* --- IMAGENS E LEGENDAS --- */
+        figure { margin: 35px 0; text-align: center; }
+        
+        .img-container-h { 
+            width: 100%; height: 400px; background: #eee; border: 1px solid #000; 
+            display: flex; align-items: center; justify-content: center; overflow: hidden;
+        }
+
+        .media-group-vertical { 
+            display: flex; 
+            gap: 20px; 
+            margin: 35px 0; 
+        }
+
+        .img-container-v { 
+            flex: 1; height: 500px; background: #eee; border: 1px solid #000; 
+            display: flex; align-items: center; justify-content: center; overflow: hidden;
+        }
+
+        img { max-width: 100%; height: auto; display: block; }
+
+        figcaption {
+            display: block; font-size: 0.85rem; font-style: italic; color: #666;
+            margin-top: 8px; text-align: left; border-left: 3px solid var(--accent-blue); padding-left: 10px;
+        }
+
+        /* --- RODAPÉ --- */
+        footer {
+            background-color: var(--dark-grey);
+            color: white;
+            padding: 40px 20px;
+            text-align: center;
+            margin-top: 60px;
+            font-size: 0.85rem;
+        }
+
+        /* --- RESPONSIVIDADE --- */
+        @media (max-width: 768px) {
+            .menu-toggle { display: block; }
+
+            .nav-menu {
+                display: none;
+                flex-direction: column;
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100vh;
+                background-color: rgba(34, 34, 34, 0.98);
+                justify-content: center;
+                align-items: center;
+                z-index: 1050;
+            }
+
+            .nav-menu ul {
+                flex-direction: column;
+                align-items: center;
+                gap: 40px;
+            }
+
+            .nav-menu.active { display: flex; }
+            .nav-menu a { font-size: 1.8rem; color: white; }
+
+            .media-group-vertical { flex-direction: column; }
+            .article-header h1 { font-size: 0.2rem; }
+            .img-container-v { height: 400px; }
+            .main-article { margin: 15px; }
+            .article-body { padding: 0 20px 20px 20px; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <button class="menu-toggle" id="mobile-menu" aria-label="Abrir Menu Principal">☰</button>
+        
+        <nav class="nav-menu" id="nav-list">
+            <ul>
+                <li><a href="../index.html">Voltar ao Início</a></li>
+            </ul>
+        </nav>
+
+        <div class="divider-line" aria-hidden="true"></div>
+
+        <div class="logo-wrapper">
+            <a href="index.html">
+                <img src="https://i.imgur.com/m8ZYGE9.png" alt="Logotipo Gazeta Mazza" class="logo-img">
+            </a>
+        </div>
+    </header>
+
+    <main>
+        <article class="main-article">
+            <header class="article-header">
+                <h1> O Novo Ensino Médio e os Cursos Técnicos na Escola Amácio Mazzaropi em Taubaté</h1>
+                <address class="author-byline">Beatriz Rodrigues, Vitor Fabiano, entre outros</address>
+            </header>
+
+            <section class="article-body">
+                <p>Nos últimos anos, o Ensino Médio no Brasil passou por mudanças importantes. Com a chegada do Novo Ensino Médio, os estudantes ganharam mais liberdade para escolher o que querem estudar e também mais oportunidades de se preparar para o futuro.</p>
+                <br>
+                <p>Na Escola Amácio Mazzaropi, em Taubaté (SP), essa mudança já é realidade. A escola oferece cursos técnicos junto com o Ensino Médio, permitindo que os alunos saiam com uma profissão e mais preparados para a vida.</p>
+
+                <h1>CONTEXTO DO NOVO ENSINO MÉDIO</h1>
+                <br>
+                <p>Antes, todos os alunos tinham praticamente as mesmas matérias e pouca opção de escolha. Hoje, com o Novo Ensino Médio, os estudantes podem direcionar seus estudos de acordo com seus interesses.</p>
+                <br>
+                <p>Isso torna o aprendizado mais interessante, porque o aluno passa a estudar coisas que fazem sentido para sua vida e seus planos.</p>
+                <br>
+                <h1>O QUE SÃO ITINERÁRIOS FORMATIVOS</h1>
+                <br>
+                <p>Os itinerários formativos são caminhos que o aluno escolhe dentro do Ensino Médio. Eles permitem aprofundar conhecimentos em áreas como Humanas, Exatas ou Tecnologia.</p>
+                <br>
+                <p>Além disso, existe a opção de formação técnica, que prepara diretamente para o mercado de trabalho.</p>
+                <br>
+                <h1>A ESCOLA AMÁCIO MAZZAROPI</h1>
+                <br>
+                <p>A Escola Amácio Mazzaropi tem se destacado por oferecer ensino técnico integrado ao Ensino Médio. A proposta da escola é simples: ajudar o aluno a aprender conteúdos importantes e, no mesmo tempo, se preparar para o futuro.</p>
+                <br>
+                <p>Com salas equipadas e professores preparados, a escola busca tornar o aprendizado mais próximo da realidade dos estudantes.</p>
+                <br>
+                <h1>CURSO TÉCNICO EM ADMINISTRAÇÃO</h1>
+                <br>
+                <p>O curso de Administração é uma das opções disponíveis. Nele, os alunos aprendem como funciona uma empresa, desde a organização até a parte financeira.</p>
+                <br>
+                <p>É um curso interessante para quem gosta de negócios ou sonha em ter sua própria empresa.</p>
+                <br>
+                <h1>CONTEÚDOS DE ADMINISTRAÇÃO</h1>
+                <br>
+                <p>Durante o curso, os alunos estudam temas como gestão de pessoas, finanças e marketing.</p>
+                <br>
+                <p>Mais do que teoria, eles aprendem a tomar decisões, organizar ideias e trabalhar em equipe, habilidades muito importantes em qualquer profissão.</p>
+                <br>
+                <h1>CURSO TÉCNICO EM DESENVOLVIMENTO DE SISTEMAS</h1>
+                <br>
+                <p>Outro curso bastante procurado é o de Desenvolvimento de Sistemas. Ele é focado para quem gosta de tecnologia e quer trabalhar com programação.</p>
+                <br>
+                <p>Hoje em dia, essa é uma das áreas que mais crescem, oferecendo muitas oportunidades.</p>
+                <br>
+                <h1>CONTEÚDOS DE TECNOLOGIA</h1>
+                <br>
+                <p>Nesse curso, os alunos aprendem lógica de programação, criação de sites, aplicativos e bancos de dados.</p>
+                <br>
+                <p>Na prática, eles desenvolvem projetos reais, o que ajuda muito no aprendizado e deixa tudo mais interessante.</p>
+                <br>
+                <h1>VANTAGENS DO ENSINO TÉCNICO</h1>
+                <br>
+                <p>Uma das maiores vantagens do ensino técnico é sair da escola já com uma profissão. Isso facilita a entrada no mercado de trabalho e também ajuda o aluno a decidir se quer continuar estudando ou começar a trabalhar.</p>
+                <br>
+                <h1>DESAFIOS DO MODELO</h1>
+                <br>
+                <p>Apesar de todas as vantagens, também existem desafios. Escolher um caminho tão cedo pode ser difícil para alguns alunos.</p>
+                <br>
+                <p>Além disso, a rotina é mais puxada, exigindo dedicação e organização.</p>
+                <br>
+                <h1>PÁGINA 11: IMPACTO NA VIDA DOS ALUNOS</h1>
+                <br>
+                <p>Mesmo com os desafios, muitos alunos se sentem mais confiantes após fazerem um curso técnico.</p>
+                <br>
+                <p>Eles desenvolvem responsabilidade, autonomia e começam a enxergar melhor o próprio futuro.</p>
+                <br>
+                <h1>PERSPECTIVAS FUTURAS</h1>
+                <br>
+                <p>A tendência é que esse modelo de ensino cresça mais no Brasil.</p>
+                <br>
+                <p>Isso pode ajudar a formar jovens mais preparados para o mercado de trabalho e também mais conscientes sobre suas escolhas.</p>
+                <br>
+                <h1>CONCLUSÃO</h1>
+                <br>
+                <p>A Escola Amácio Mazzaropi mostra como o ensino pode evoluir e se adaptar às necessidades dos alunos.</p>
+                <br>
+                <p>Com cursos técnicos e mais liberdades na escolha, os estudantes ganham novas oportunidades e mais confiança no futuro.</p>
+                <br>
+                <h1>ROTINA DOS ESTUDANTES</h1>
+                <br>
+                <p>A rotina dos alunos do ensino técnico é mais intensa, mas também mais rica em aprendizado.</p>
+                <br>
+                <p>Eles passam mais tempo na escola, participam de atividades práticas e aprendem coisas que podem usar na vida real.</p>
+                <br>
+                <h1>PROJETOS E ATIVIDADES PRÁTICAS</h1>
+                <br>
+                <p>Os projetos são uma das partes mais interessantes dos cursos técnicos.</p>
+                <br>
+                <p>Os alunos colocam a mão na massa, criam soluções e aprendem fazendo, o que torna tudo mais dinâmico.</p>
+                <br>
+                <h1>PREPARAÇÃO PARA O MERCADO DE TRABALHO</h1>
+                <br>
+                <p>Durante o curso, os alunos desenvolvem habilidades importantes como comunicação, trabalho em equipe e resolução de problemas.</p>
+                <br>
+                <p>Essas qualidades fazem muita diferença na hora de conseguir um emprego.</p>
+                <br>
+                <h1>DEPOIMENTO DOS ESTUDANTES</h1>
+                <br>
+                <p>Muitos alunos dizem que o curso técnico mudou a forma como enxergam o futuro.</p>
+                <br>
+                <p>Alguns descobrem a profissão que querem seguir, enquanto outros conseguem até o primeiro emprego.</p>
+                <br>
+                <h1>CONSIDERAÇÕES FINAIS</h1>
+                <br>
+                <p>O ensino técnico é uma oportunidade importante para os jovens.</p>
+                <br>
+                <p>Na Escola Amácio Mazzaropi, ele ajuda a formar alunos mais preparados, confiantes e prontos para enfrentar os desafios do mundo.</p>
+                <br>
+            </section>
+        </article>
+    </main>
+
+    <footer>
+        <p><strong>Projeto desenvolvido para a Eletiva Gazeta Mazza</strong></p>
+        <p style="margin-top: 10px; font-size: 0.7rem; opacity: 0.6;">Conteúdo: 1°A (2026) E.E Amácio Mazzaropi • Professora Lara Oliveira</p> 
+        <p style="margin-top: 10px; font-size: 0.7rem; opacity: 0.6;">Blog desenvolvido por: Camila Morais, Nicole Aparecida, Maria Eduarda Trindade, Melissa Blois e Rafael Avelino - 3DS (2026) • Professora Luiza Oliveira</p>
+        <p style="margin-top: 10px; font-size: 0.7rem; opacity: 0.6;">
+            © 2026 - Gazeta Mazza Digital
+        </p>
+    </footer>
+
+    <script>
+        const menuBtn = document.getElementById('mobile-menu');
+        const navList = document.getElementById('nav-list');
+
+        menuBtn.addEventListener('click', () => {
+            const isActive = navList.classList.toggle('active');
+            menuBtn.textContent = isActive ? '✕' : '☰';
+            menuBtn.setAttribute('aria-expanded', isActive);
+        });
+
+        document.querySelectorAll('.nav-menu a').forEach(link => {
+            link.addEventListener('click', () => {
+                navList.classList.remove('active');
+                menuBtn.textContent = '☰';
+            });
+        });
+    </script>
+</body>
+</html>

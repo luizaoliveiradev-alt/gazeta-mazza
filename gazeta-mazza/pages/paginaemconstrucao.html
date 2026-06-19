@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gazeta Mazza: Artigos de Opinião</title>
+
+    <link rel="icon" type="image/png" href="https://i.imgur.com/m8ZYGE9.png">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --dark-grey: #333333;
+            --off-white: #e8e6e1;
+            --accent-blue: #a8c1d9;
+            --white: #FFFFFF;
+            --font-serif: 'Playfair Display', serif;
+            --font-sans: 'Roboto', sans-serif;
+            --menu-mobile-bg: #444; /* Cor solicitada */
+        }
+
+        *{
+            margin:0;
+            padding:0;
+            box-sizing:border-box;
+        }
+
+        body{
+            background-color: #dfd8cd;
+            color: var(--dark-grey);
+            font-family: var(--font-sans);
+            line-height:1.6;
+            overflow-x: hidden;
+        }
+
+        /* ---------------- HEADER ---------------- */
+
+        header{
+            background-color: var(--dark-grey);
+            color:#dfd8cd;
+            padding: 30px 15px 0 15px;
+            text-align:center;
+            position: relative;
+        }
+
+        /* MENU DESKTOP */
+        .nav-menu{
+            display:flex;
+            justify-content:center;
+            gap:30px;
+            margin-bottom:20px;
+            transition: all 0.3s ease;
+        }
+
+        .nav-menu a{
+            color:#d1d1d1;
+            text-decoration:none;
+            font-family:var(--font-serif);
+            font-size:1.2rem;
+            transition:color 0.3s ease;
+        }
+
+        .nav-menu a:hover{ color:white; }
+
+        /* BOTÃO HAMBÚRGUER (Escondido no Desktop) */
+        .hamburger {
+            display: none;
+            cursor: pointer;
+            background: none;
+            border: none;
+            padding: 10px;
+            z-index: 1000;
+            position: absolute;
+            top: 20px;
+            right: 20px;
+        }
+
+        .hamburger span {
+            display: block;
+            width: 30px;
+            height: 3px;
+            background-color: #dfd8cd;
+            margin: 6px 0;
+            transition: 0.4s;
+        }
+
+        .divider-line{
+            height:1px;
+            background-color:rgba(255,255,255,0.3);
+            width:90%;
+            margin:0 auto;
+        }
+
+        .logo-wrapper{
+            display:inline-block;
+            padding:20px;
+            width: 100%;
+        }
+
+        .logo-img{
+            max-width:100%;
+            width: 380px;
+            height:auto;
+            margin: 0 auto;
+            display:block;
+        }
+
+        .header-subtext{
+            font-family:var(--font-sans);
+            font-style:italic;
+            font-weight:300;
+            font-size:1rem;
+            padding: 0 10px 30px 10px;
+            color:#ccc;
+            letter-spacing:1px;
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: justify;
+            text-align-last: center;
+        }
+
+        /* ---------------- FOOTER ---------------- */
+
+        footer{
+            background-color: #dfd8cd;
+            color:#444;
+            padding:40px 20px;
+            text-align: justify;
+            margin-top:40px;
+            font-size:0.95rem;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* ---------------- RESPONSIVO (MOBILE) ---------------- */
+
+        @media (max-width:768px){
+            .hamburger {
+                display: block; /* Mostra o botão no mobile */
+            }
+
+            .nav-menu {
+                display: none; /* Esconde o menu original */
+                flex-direction: column;
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100vh;
+                background-color: var(--menu-mobile-bg);
+                justify-content: center;
+                align-items: center;
+                gap: 40px;
+                z-index: 999;
+            }
+
+            .nav-menu.active {
+                display: flex; /* Mostra quando clicado */
+            }
+
+            .nav-menu a {
+                font-size: 1.8rem;
+                color: white;
+            }
+
+            /* Efeito "X" no botão quando aberto */
+            .hamburger.active span:nth-child(1) { transform: rotate(-45deg) translate(-9px, 6px); }
+            .hamburger.active span:nth-child(2) { opacity: 0; }
+            .hamburger.active span:nth-child(3) { transform: rotate(45deg) translate(-8px, -8px); }
+
+            .logo-img{ max-width:260px; }
+            br { display: none; }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <button class="hamburger" id="hamburger" aria-label="Abrir menu">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+
+        <nav class="nav-menu" id="nav-menu">
+            <a href="../index.html">Voltar ao Início</a>
+        </nav>
+
+        <div class="divider-line"></div>
+
+        <div class="logo-wrapper">
+            <img src="https://i.imgur.com/ZfQb6I2.png" alt="Gazeta Mazza" class="logo-img">
+        </div>
+
+        <p class="header-subtext">
+            Os artigos de opinião publicados nesta seção estão sendo cuidadosamente desenvolvidos pelos alunos da eletiva 
+            <strong>Gazeta Mazza - 1ºA</strong>, promovendo um ambiente de criatividade, senso crítico e expressão intelectual dentro do espaço escolar.
+        </p>
+    </header>
+
+    <footer>
+        <p><strong>Projeto desenvolvido para a Eletiva Gazeta Mazza</strong></p>
+        <p style="margin-top: 10px; font-size: 0.7rem; opacity: 0.6;">Conteúdo: 1°A (2026) E.E Amácio Mazzaropi • Professora Lara Oliveira</p> 
+        <p style="margin-top: 10px; font-size: 0.7rem; opacity: 0.6;">Blog desenvolvido por: Camila Morais, Nicole Aparecida, Maria Eduarda Trindade, Melissa Blois e Rafael Avelino - 3DS (2026) • Professora Luiza Oliveira</p>
+        <p style="margin-top: 10px; font-size: 0.7rem; opacity: 0.6;">
+            © 2026 - Gazeta Mazza Digital
+        </p>
+    </footer>
+
+    <script>
+        const hamburger = document.getElementById('hamburger');
+        const navMenu = document.getElementById('nav-menu');
+        const navLinks = document.querySelectorAll('.nav-menu a');
+
+        // Abre/Fecha menu ao clicar no hambúrguer
+        hamburger.addEventListener('click', () => {
+            hamburger.classList.toggle('active');
+            navMenu.classList.toggle('active');
+            // Impede o scroll do corpo quando o menu está aberto
+            document.body.style.overflow = navMenu.classList.contains('active') ? 'hidden' : 'auto';
+        });
+
+        // Fecha o menu ao clicar em qualquer link
+        navLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                hamburger.classList.remove('active');
+                navMenu.classList.remove('active');
+                document.body.style.overflow = 'auto';
+            });
+        });
+    </script>
+
+</body>
+</html>

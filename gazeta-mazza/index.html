@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gazeta Mazza - Início</title>
+
+    <link rel="icon" type="image/png" href="https://i.imgur.com/m8ZYGE9.png">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --dark-grey: #333333;
+            --off-white: #e8e6e1;
+            --accent-blue: #a8c1d9;
+            --font-serif: 'Playfair Display', serif;
+            --font-sans: 'Roboto', sans-serif;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--off-white);
+            color: var(--dark-grey);
+            font-family: var(--font-sans);
+            line-height: 1.6;
+        }
+
+        /* HEADER */
+
+        header {
+            background-color: var(--dark-grey);
+            color: white;
+            padding-top: 30px;
+            text-align: center;
+            position: relative;
+        }
+
+        .nav-menu {
+            display: flex;
+            justify-content: center;
+            gap: 50px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .nav-menu a {
+            color: #d1d1d1;
+            text-decoration: none;
+            font-family: var(--font-serif);
+            font-size: 1.5rem;
+            transition: color 0.3s ease;
+        }
+
+        .nav-menu a:hover {
+            color: white;
+        }
+
+        .hamburger {
+            display: none;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 2rem;
+            cursor: pointer;
+            padding: 10px;
+        }
+
+        .divider-line {
+            height: 1px;
+            background-color: rgba(255, 255, 255, 0.3);
+            width: 90%;
+            margin: 0 auto;
+        }
+
+        .logo-wrapper {
+            background-color: transparent;
+            display: inline-block;
+            padding: 20px 40px;
+            margin-top: 10px;
+        }
+
+        .logo-img {
+            max-width: 380px;
+            height: auto;
+            display: block;
+        }
+
+        .header-subtext {
+            font-family: var(--font-sans);
+            font-style: italic;
+            font-weight: 300;
+            font-size: 0.95rem;
+            padding-bottom: 30px;
+            color: #ccc;
+            letter-spacing: 1px;
+        }
+
+        /* CONTEÚDO */
+
+        .container {
+            max-width: 1100px;
+            margin: 50px auto;
+            padding: 0 20px;
+        }
+
+        .section-header {
+            font-family: var(--font-serif);
+            font-size: 2.5rem;
+            border-bottom: 1px solid #ccc;
+            margin-bottom: 40px;
+            padding-bottom: 10px;
+            text-align: center;
+        }
+
+        .news-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 60px;
+        }
+
+        .news-item {
+            background: white;
+            padding: 25px;
+            border: 1px solid #ddd;
+            box-shadow: 4px 4px 0px var(--accent-blue);
+            transition: all 0.3s ease;
+        }
+
+        .news-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 6px 6px 0px var(--dark-grey);
+        }
+
+        .news-item h3 {
+            font-family: var(--font-serif);
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+        }
+
+        .read-more {
+            font-weight: bold;
+            text-transform: uppercase;
+            font-size: 0.8rem;
+            color: var(--dark-grey);
+            text-decoration: none;
+            border-bottom: 1px solid var(--dark-grey);
+        }
+
+        /* PODCAST */
+
+        .podcast-section {
+            background: #fff;
+            padding: 60px 40px;
+            border: 1px solid #ddd;
+            text-align: center;
+            margin-top: 50px;
+        }
+
+        .podcast-link {
+            display: inline-block;
+            margin-top: 25px;
+            padding: 15px 35px;
+            background-color: #1DB954;
+            color: white;
+            text-decoration: none;
+            border-radius: 30px;
+            font-weight: bold;
+            transition: transform 0.2s;
+        }
+
+        .podcast-link:hover {
+            transform: scale(1.05);
+        }
+
+        footer {
+            background-color: var(--dark-grey);
+            color: white;
+            padding: 50px 20px;
+            text-align: center;
+            margin-top: 80px;
+            font-size: 0.9rem;
+        }
+
+        /* MOBILE */
+
+        @media (max-width: 768px) {
+
+            header {
+                padding-top: 15px;
+            }
+
+            .hamburger {
+                display: block;
+                margin: 0 auto 15px;
+            }
+
+            .nav-menu {
+                display: none;
+                flex-direction: column;
+                align-items: center;
+                gap: 15px;
+                width: 100%;
+                margin-bottom: 20px;
+            }
+
+            .nav-menu.active {
+                display: flex;
+            }
+
+            .nav-menu a {
+                font-size: 1.2rem;
+            }
+
+            .logo-img {
+                max-width: 280px;
+            }
+
+            .header-subtext {
+                padding: 0 15px 20px;
+                font-size: 0.85rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+
+        <button class="hamburger" id="hamburger">
+            ☰
+        </button>
+
+        <nav class="nav-menu" id="navMenu">
+            <a href="index.html">Início</a>
+            <a href="#reportagens">Reportagens</a>
+            <a href="#podcast">Podcast</a>
+            <a href="#">Artigos de Opinião</a>
+        </nav>
+
+        <div class="divider-line"></div>
+
+        <div class="logo-wrapper">
+            <img src="https://i.imgur.com/m8ZYGE9.png" alt="Gazeta Mazza" class="logo-img">
+        </div>
+
+        <p class="header-subtext">
+        Eletiva 1°A • Professora Lara • EE. AMÁCIO MAZZAROPI
+        </p>
+
+    </header>
+
+    <main class="container">
+
+        <section id="reportagens">
+            <h2 class="section-header">Edição do Dia</h2>
+
+            <div class="news-grid" id="news-container">
+            </div>
+        </section>
+
+        <section id="podcast" class="podcast-section">
+            <h2 class="section-header">Podcast Gazeta Mazza</h2>
+
+            <p>
+                Histórias contadas em áudio para preservar nossa cultura e tradição.
+            </p>
+
+            <a href="https://open.spotify.com/show/5iq84ertkvTRAj3vzsU2RX?si=ztrekl4-QTmteQQG-hOqNw"
+               target="_blank"
+               class="podcast-link">
+                Ouvir no Spotify
+            </a>
+        </section>
+
+    </main>
+
+    <footer>
+        <p><strong>Projeto desenvolvido para a Eletiva Gazeta Mazza</strong></p>
+        <p style="margin-top: 10px; font-size: 0.7rem; opacity: 0.6;">Conteúdo: 1°A (2026) E.E Amácio Mazzaropi • Professora Lara Oliveira</p> 
+        <p style="margin-top: 10px; font-size: 0.7rem; opacity: 0.6;">Blog desenvolvido por: Camila Morais, Nicole Aparecida, Maria Eduarda Trindade, Melissa Blois e Rafael Avelino - 3DS (2026) • Professora Luiza Oliveira</p>
+        <p style="margin-top: 10px; font-size: 0.7rem; opacity: 0.6;">
+            © 2026 - Gazeta Mazza Digital
+        </p>
+    </footer>
+
+    <script>
+
+        /* MENU HAMBÚRGUER */
+
+        const hamburger = document.getElementById('hamburger');
+        const navMenu = document.getElementById('navMenu');
+
+        hamburger.addEventListener('click', () => {
+            navMenu.classList.toggle('active');
+
+            if (navMenu.classList.contains('active')) {
+                hamburger.innerHTML = '✕';
+            } else {
+                hamburger.innerHTML = '☰';
+            }
+        });
+
+        /* NOTÍCIAS */
+
+        const noticiasData = [
+            {
+                titulo: "Quem é o Patrono da Escola?",
+                resumo: "Conheça um pouco da tragetória de Amácio Mazzaropi: O Patrono da Escola",
+                url: "pages/postagem1.html"
+            },
+            {
+                titulo: "O que São as Plataformas?",
+                resumo: "Entenda mais sobre as plataformas digitais das escolas estaduais",
+                url: "pages/postagem2.html"
+            },
+            {
+                titulo: "PEI de 7h e PEI de 9h",
+                resumo: "Entenda o que é uma Escola PEI (Período de Ensino Integral) e as principais diferenças entre uma PEI de 7h e uma PEI de 9h",
+                url: "pages/postagem3.html"
+            },
+            {
+                titulo: "O Novo Ensino Médio",
+                resumo: "Conheça mais sobre o Novo Ensino Médio e os cursos técnicos disponíveis na EE Amácio Mazzaropi",
+                url: "pages/postagem4.html"
+            }
+        ];
+
+        const container = document.getElementById('news-container');
+
+        noticiasData.forEach(news => {
+            const article = document.createElement('article');
+
+            article.className = 'news-item';
+
+            article.innerHTML = `
+                <h3>${news.titulo}</h3>
+                <p>${news.resumo}</p>
+                <br>
+                <a href="${news.url}" class="read-more">Ler mais +</a>
+            `;
+
+            container.appendChild(article);
+        });
+
+    </script>
+
+</body>
+</html>

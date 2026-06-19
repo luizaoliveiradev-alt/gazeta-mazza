@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Visualizar Reportagem - Gazeta Mazza</title>
+    
+    <link rel="icon" type="image/png" href="https://i.imgur.com/m8ZYGE9.png">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --dark-grey: #333333;
+            --off-white: #e8e6e1; 
+            --accent-blue: #a8c1d9;
+            --font-serif: 'Playfair Display', serif;
+            --font-sans: 'Roboto', sans-serif;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { background-color: var(--off-white); color: var(--dark-grey); font-family: var(--font-sans); line-height: 1.8; }
+
+        /* --- HEADER --- */
+        header {
+            background-color: var(--dark-grey);
+            color: white;
+            padding-top: 15px;
+            text-align: center;
+            position: relative;
+            z-index: 1000;
+        }
+
+        .menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 2rem;
+            cursor: pointer;
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            z-index: 1100;
+        }
+
+        .nav-menu {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-bottom: 10px;
+            transition: 0.3s ease;
+        }
+
+        .nav-menu ul {
+            list-style: none;
+            display: flex;
+            gap: 30px;
+        }
+
+        .nav-menu a {
+            color: #d1d1d1;
+            text-decoration: none;
+            font-family: var(--font-serif);
+            font-size: 1.1rem;
+            transition: color 0.3s ease;
+        }
+
+        .nav-menu a:hover { color: white; }
+
+        .divider-line {
+            height: 1px;
+            background-color: rgba(255, 255, 255, 0.2);
+            width: 90%;
+            margin: 0 auto;
+        }
+
+        .logo-wrapper {
+            padding: 10px 0;
+            margin-top: 5px;
+        }
+
+        .logo-img {
+            max-width: 220px;
+            height: auto;
+            display: inline-block;
+        }
+
+        /* --- CONTEÚDO SEMÂNTICO --- */
+        .main-article {
+            max-width: 850px;
+            margin: 40px auto;
+            background-color: #fff;
+            border: 1px solid #ddd;
+            box-shadow: 0px 4px 15px rgba(0,0,0,0.05);
+            overflow: hidden; /* Garante que o fundo do header não escape */
+        }
+
+        .article-header {
+            text-align: center;
+            padding: 60px 40px;
+            background-color: #4a4a4a; /* Cor de fundo conforme a imagem */
+            margin-bottom: 40px;
+        }
+
+        .article-header h1 {
+            font-family: var(--font-serif);
+            font-size: 1rem;
+            line-height: 1.1;
+            margin-bottom: 15px;
+            color: #c9c9c9; /* Texto escuro sobre o fundo cinza conforme a imagem */
+            text-transform: uppercase;
+        }
+
+        .author-byline {
+            font-family: var(--font-serif);
+            font-size: 2.7rem;
+            font-weight: 400;
+            font-style: italic;
+            color: #aaa; /* Texto mais claro para o "Por:" */
+            display: block;
+        }
+
+        .article-body {
+            padding: 0 40px 40px 40px;
+        }
+
+        .article-body p { 
+            margin-bottom: 20px; 
+            font-size: 1.1rem; 
+            text-align: justify; 
+        }
+
+        /* --- IMAGENS E LEGENDAS --- */
+        figure { margin: 35px 0; text-align: center; }
+        
+        .img-container-h { 
+            width: 100%; height: 400px; background: #eee; border: 1px solid #000; 
+            display: flex; align-items: center; justify-content: center; overflow: hidden;
+        }
+
+        .media-group-vertical { 
+            display: flex; 
+            gap: 20px; 
+            margin: 35px 0; 
+        }
+
+        .img-container-v { 
+            flex: 1; height: 500px; background: #eee; border: 1px solid #000; 
+            display: flex; align-items: center; justify-content: center; overflow: hidden;
+        }
+
+        img { max-width: 100%; height: auto; display: block; }
+
+        figcaption {
+            display: block; font-size: 0.85rem; font-style: italic; color: #666;
+            margin-top: 8px; text-align: left; border-left: 3px solid var(--accent-blue); padding-left: 10px;
+        }
+
+        /* --- RODAPÉ --- */
+        footer {
+            background-color: var(--dark-grey);
+            color: white;
+            padding: 40px 20px;
+            text-align: center;
+            margin-top: 60px;
+            font-size: 0.85rem;
+        }
+
+        /* --- RESPONSIVIDADE --- */
+        @media (max-width: 768px) {
+            .menu-toggle { display: block; }
+
+            .nav-menu {
+                display: none;
+                flex-direction: column;
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100vh;
+                background-color: rgba(34, 34, 34, 0.98);
+                justify-content: center;
+                align-items: center;
+                z-index: 1050;
+            }
+
+            .nav-menu ul {
+                flex-direction: column;
+                align-items: center;
+                gap: 40px;
+            }
+
+            .nav-menu.active { display: flex; }
+            .nav-menu a { font-size: 1.8rem; color: white; }
+
+            .media-group-vertical { flex-direction: column; }
+            .article-header h1 { font-size: 0.2rem; }
+            .img-container-v { height: 400px; }
+            .main-article { margin: 15px; }
+            .article-body { padding: 0 20px 20px 20px; }
+        }
+        
+    </style>
+</head>
+<body>
+
+    <header>
+        <button class="menu-toggle" id="mobile-menu" aria-label="Abrir Menu Principal">☰</button>
+        
+        <nav class="nav-menu" id="nav-list">
+            <ul>
+                <li><a href="../index.html">Voltar ao Início</a></li>
+            </ul>
+        </nav>
+
+        <div class="divider-line" aria-hidden="true"></div>
+
+        <div class="logo-wrapper">
+            <a href="index.html">
+                <img src="https://i.imgur.com/m8ZYGE9.png" alt="Logotipo Gazeta Mazza" class="logo-img">
+            </a>
+        </div>
+    </header>
+
+    <main>
+        <article class="main-article">
+            <header class="article-header">
+                <h1>Por: Ághata, Maria, Laís </h1>
+                <address class="author-byline">Amácio Mazzaropi: simplicidade que virou sucesso</address>
+            </header>
+
+            <section class="article-body">
+                <p>
+                    Nascido em 9 de abril de 1912, na cidade de São Paulo, Amácio Mazzaropi construiu uma das trajetórias mais marcantes do cinema e do humor popular brasileiro. Apesar da origem na capital, foi no interior paulista — especialmente em Taubaté e Tremembé — que encontrou as referências culturais que moldariam sua identidade artística. Desde a infância, Mazzaropi teve contato direto com manifestações populares, como o circo-teatro e as companhias itinerantes. Foi nesse ambiente que iniciou sua carreira, ainda jovem, integrando trupes mambembes e desenvolvendo um estilo de humor simples, acessível e profundamente ligado ao cotidiano do homem do campo.
+                    Ao longo da década de 1930, já mais experiente, ampliou sua atuação para os palcos teatrais e também para o rádio — um dos principais meios de comunicação da época. Seu talento em criar personagens carismáticos garantiu reconhecimento do público, sobretudo com figuras caipiras que, ao mesmo tempo em que divertiam, valorizavam a cultura rural brasileira.
+                    Com uma linguagem direta e popular, Mazzaropi transformou a simplicidade em sua maior força, consolidando-se como um dos artistas mais queridos.
+                </p>
+
+                <figure>
+                    <div class="img-container-h">
+                        <img src="../images/postagem1/AMACIO.jpg" alt="Descrição visual para acessibilidade da imagem horizontal">
+                    </div>
+                    <figcaption>O artista nasceu em 9 de abril de 1912, em São Paulo. Passou boa parte da infância em Taubaté e Tremembé, onde conviveu com a cultura local e posteriormente se tornou parte dela.</figcaption>
+                </figure>
+
+                
+                    <h1>O LEGADO DE UM GRANDE ARTISTA NO CINEMA BRASILEIRO</h1><br><br>
+                    <p>Amácio Mazzaropi consolidou-se como uma das figuras mais importantes da história do cinema nacional ao aproximar o público brasileiro das produções do próprio país. Em um período marcado pela forte presença de filmes estrangeiros nas salas de exibição, o artista conseguiu atrair multidões e demonstrar que o Brasil também era capaz de produzir grandes sucessos de bilheteria.<br>
+                        Outro ponto de destaque em sua trajetória foi a valorização da cultura brasileira. Em seus filmes, Mazzaropi retratava costumes do interior, tradições familiares, formas de linguagem e situações cotidianas que dialogavam diretamente com a realidade de milhões de brasileiros. Ao transformar esses elementos em entretenimento, contribuiu para preservar e difundir aspectos da identidade cultural do país ao longo de diferentes gerações.<br>
+                        Além de seu talento como ator, Mazzaropi também exerceu papel relevante como produtor e empresário. Ao fundar sua própria produtora cinematográfica, mostrou que era possível desenvolver projetos com autonomia e visão de mercado dentro do Brasil. Sua iniciativa abriu caminhos para outros profissionais do setor e reforçou a importância de investir na indústria cinematográfica nacional.<br>
+                        Décadas após o auge de sua carreira, o legado de Mazzaropi permanece vivo. Seus filmes continuam sendo exibidos, estudados e reconhecidos como parte fundamental da cultura brasileira. Mais do que provocar o riso, o artista contribuiu para o fortalecimento do cinema nacional e evidenciou que histórias genuinamente brasileiras possuem valor, força e permanência na memória do público.<br>
+                        Sua influência também pode ser percebida em novas gerações de artistas e cineastas, que passaram a valorizar narrativas mais próximas da realidade do país. Dessa forma, Mazzaropi não apenas marcou sua época, mas também ajudou a construir e fortalecer a identidade do cinema brasileiro.
+                        <br><br>
+                    </p>
+                    <h1>CURIOSIDADES QUE MARCARAM A HISTÓRIA DE MAZZAROPI</h1><br><br>
+                    <p>A trajetória de Amácio Mazzaropi vai além da atuação e revela aspectos curiosos que ajudam a entender a dimensão de sua importância no cinema brasileiro. Um dos fatos mais marcantes é que ele não se limitava aos palcos ou às telas: também atuava como produtor, roteirista e empresário. Envolvido diretamente nas decisões de seus filmes, Mazzaropi demonstrava dedicação e visão estratégica, fatores que contribuíram para transformar seu nome em uma das marcas mais fortes do entretenimento nacional.<br>
+                        Outra curiosidade relevante está no impacto de seu personagem mais famoso, o caipira conhecido em todo o país. Mais do que uma figura cômica, esse personagem — popularmente associado ao Jeca Tatu — tornou-se um símbolo da cultura popular brasileira. Com linguagem simples, trejeitos característicos e situações bem-humoradas, representava o cotidiano do interior e conquistava públicos de diferentes idades e regiões.<br>
+                        Apesar do enorme sucesso de bilheteria, Mazzaropi nem sempre foi reconhecido pela crítica especializada durante sua carreira. Ainda assim, manteve o apoio fiel do público, que continuava a lotar os cinemas para assistir às suas produções. Com o passar do tempo, sua relevância artística e cultural passou a ser cada vez mais reconhecida por estudiosos e críticos.<br>
+                        Após sua morte, o legado do artista permaneceu vivo por meio de reprises, pesquisas acadêmicas e homenagens. Seus filmes continuam sendo exibidos e redescobertos por novas gerações, consolidando sua trajetória como essencial para compreender a história do cinema e do entretenimento no Brasil.<br>
+                        Mesmo décadas após o auge de sua carreira, Mazzaropi segue como referência. Seu estilo único de humor ainda é admirado, e sua imagem permanece associada à simplicidade, ao talento e à valorização das raízes culturais brasileiras.<br>
+                        A SABEDORIA POR TRÁS DO HUMOR DE MAZZAROPI
+                        A frase “Eu sou caipira, mas num sou bobo!” sintetiza com precisão a essência dos personagens interpretados por Amácio Mazzaropi ao longo de sua carreira. Em suas produções, o artista frequentemente dava vida a homens simples do interior, muitas vezes subestimados por outros personagens. No entanto, ao longo das narrativas, essas figuras revelavam inteligência, astúcia e habilidade para enfrentar e superar desafios.<br>
+                        Mais do que um recurso de humor, a expressão carrega uma crítica social relevante. Por meio de seus filmes, Mazzaropi evidenciava que a aparência humilde ou a forma de falar não determinam a capacidade intelectual de uma pessoa. Assim, seus personagens contribuíam para questionar preconceitos e reforçar a ideia de que sabedoria e dignidade podem estar presentes em diferentes contextos sociais.<br>
+                        UMA MENSAGEM QUE ATRAVESSA GERAÇÕES
+                        Décadas após sua popularização, a frase permanece atual e significativa. O ensinamento implícito reforça que ninguém deve ser julgado por sua origem, aparência ou modo de expressão — uma reflexão que continua pertinente na sociedade contemporânea.<br>
+                        A expressão também se consolidou como símbolo do legado deixado por Mazzaropi. Ao unir humor e autenticidade, o artista valorizou o homem do campo e a cultura popular brasileira, transformando uma fala simples em uma mensagem duradoura, capaz de dialogar com diferentes gerações e manter viva sua relevância cultural.<br>
+                     </p>
+
+                <div class="media-group-vertical">
+                    <figure style="flex: 1;">
+                        <div class="img-container-v">
+                            <img src="../images/postagem1/POSTERGECATATU.jpg" alt="Descrição da imagem vertical 1">
+                        </div>
+                        <figcaption>Amácio foi um grande ator e empresário. Cartaz de um de seus personagens mais célebres: Jeca Tatu (1960) 
+
+                        </figcaption>
+                    </figure>
+
+                    <figure style="flex: 1;">
+                        <div class="img-container-v">
+                            <img src="../images/postagem1/AMACIOESEUSPAIS.jpg" alt="Descrição da imagem vertical 2">
+                        </div>
+                        <figcaption>Amácio e seus pais. 
+
+                        </figcaption>
+                    </figure>
+                </div>
+
+                <p>
+                    Não apenas ter interpretado o personagem Jeca Tatu, criado por Monteiro Lobato, para representar o caipira paulista. Amácio Mazzaropi é prestigiado pela cultura taubateana. A Escola Estadual Amácio Mazzaropi, localizada na Rua Paulo Setúbal, 502, Vila São José, funciona no modelo do Programa Ensino Integral (PEI), desde de 2022 e com jornada de 7 horas. A escola busca desenvolver o protagonismo juvenil, a autonomia e o projeto de vida dos estudantes, inspirando-se nos valores deixados por Mazzaropi e pode ser considerada uma escola modelo na rede estadual. 
+                </p>
+            </section>
+        </article>
+    </main>
+
+    <footer>
+        <p><strong>Projeto desenvolvido para a Eletiva Gazeta Mazza</strong></p>
+        <p style="margin-top: 10px; font-size: 0.7rem; opacity: 0.6;">Conteúdo: 1°A (2026) E.E Amácio Mazzaropi • Professora Lara Oliveira</p> 
+        <p style="margin-top: 10px; font-size: 0.7rem; opacity: 0.6;">Blog desenvolvido por: Camila Morais, Nicole Aparecida, Maria Eduarda Trindade, Melissa Blois e Rafael Avelino - 3DS (2026) • Professora Luiza Oliveira</p>
+        <p style="margin-top: 10px; font-size: 0.7rem; opacity: 0.6;">
+            © 2026 - Gazeta Mazza Digital
+        </p>
+    </footer>
+
+    <script>
+        const menuBtn = document.getElementById('mobile-menu');
+        const navList = document.getElementById('nav-list');
+
+        menuBtn.addEventListener('click', () => {
+            const isActive = navList.classList.toggle('active');
+            menuBtn.textContent = isActive ? '✕' : '☰';
+            menuBtn.setAttribute('aria-expanded', isActive);
+        });
+
+        document.querySelectorAll('.nav-menu a').forEach(link => {
+            link.addEventListener('click', () => {
+                navList.classList.remove('active');
+                menuBtn.textContent = '☰';
+            });
+        });
+    </script>
+</body>
+</html>
